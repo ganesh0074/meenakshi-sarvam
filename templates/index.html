@@ -1,0 +1,247 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>PDF Question Answering System</title>-->
+<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">-->
+<!--    <style>-->
+<!--        body {-->
+<!--            font-family: 'Arial', sans-serif;-->
+<!--            background-color: #f0f4f8;-->
+<!--            color: #333;-->
+<!--            margin: 0;-->
+<!--            padding: 0;-->
+<!--        }-->
+
+<!--        .container {-->
+<!--            max-width: 800px;-->
+<!--            margin: 50px auto;-->
+<!--            padding: 20px;-->
+<!--            border-radius: 8px;-->
+<!--            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);-->
+<!--            background-color: #ffffff;-->
+<!--        }-->
+
+<!--        header {-->
+<!--            text-align: center;-->
+<!--            margin-bottom: 20px;-->
+<!--        }-->
+
+<!--        header h1 {-->
+<!--            color: #4a90e2;-->
+<!--        }-->
+
+<!--        form {-->
+<!--            display: flex;-->
+<!--            flex-direction: column;-->
+<!--            gap: 15px;-->
+<!--            margin-bottom: 20px;-->
+<!--        }-->
+
+<!--        input[type="file"],-->
+<!--        input[type="text"],-->
+<!--        button {-->
+<!--            padding: 10px;-->
+<!--            border: 1px solid #ccc;-->
+<!--            border-radius: 4px;-->
+<!--            font-size: 16px;-->
+<!--        }-->
+
+<!--        input[type="file"] {-->
+<!--            border: none;-->
+<!--        }-->
+
+<!--        button {-->
+<!--            background-color: #4a90e2;-->
+<!--            color: white;-->
+<!--            border: none;-->
+<!--            cursor: pointer;-->
+<!--            transition: background-color 0.3s ease;-->
+<!--        }-->
+
+<!--        button:hover {-->
+<!--            background-color: #357ab8;-->
+<!--        }-->
+
+<!--        .message {-->
+<!--            padding: 10px;-->
+<!--            border-radius: 4px;-->
+<!--            margin-top: 10px;-->
+<!--            font-weight: bold;-->
+<!--        }-->
+
+<!--        .error {-->
+<!--            background-color: #f8d7da;-->
+<!--            color: #721c24;-->
+<!--        }-->
+
+<!--        .success {-->
+<!--            background-color: #d4edda;-->
+<!--            color: #155724;-->
+<!--        }-->
+
+<!--        .answer {-->
+<!--            margin-top: 20px;-->
+<!--            padding: 15px;-->
+<!--            border: 1px solid #4a90e2;-->
+<!--            border-radius: 4px;-->
+<!--            background-color: #f0f8ff;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <div class="container">-->
+<!--        <header>-->
+<!--            <h1>Sarvam.ai</h1>-->
+<!--            <p>Upload your PDF and ask questions!</p>-->
+<!--        </header>-->
+
+<!--        <form action="/upload_pdf/" method="POST" enctype="multipart/form-data">-->
+<!--            <input type="file" name="pdf_file" accept=".pdf" required>-->
+<!--            <button type="submit">Upload PDF</button>-->
+<!--        </form>-->
+
+<!--        <form action="/query/" method="GET">-->
+<!--            <input type="text" name="text" placeholder="Ask your question here..." required>-->
+<!--            <button type="submit">Get Answer</button>-->
+<!--        </form>-->
+
+<!--        {% if error %}-->
+<!--        <div class="message error">{{ error }}</div>-->
+<!--        {% endif %}-->
+
+<!--        {% if message %}-->
+<!--        <div class="message success">{{ message }}</div>-->
+<!--        {% endif %}-->
+
+<!--        {% if answer %}-->
+<!--        <div class="answer">-->
+<!--            <h2>Your Answer:</h2>-->
+<!--            <p>{{ answer }}</p>-->
+<!--        </div>-->
+<!--        {% endif %}-->
+<!--    </div>-->
+<!--</body>-->
+<!--</html>-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Question Answering System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        header h1 {
+            color: #4a90e2;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        input[type="file"],
+        input[type="text"],
+        button {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        input[type="file"] {
+            border: none;
+        }
+
+        button {
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #357ab8;
+        }
+
+        .message {
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .answer {
+            background-color: #e2e3e5;
+            padding: 10px;
+            border-left: 5px solid #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Sarvam.ai</h1>
+            <p>Upload your PDF and ask questions!</p>
+        </header>
+
+    <form action="/upload_pdf/" method="POST" enctype="multipart/form-data">
+        <input type="file" name="pdf_file" accept=".pdf" required>
+        <button type="submit">Upload PDF</button>
+    </form>
+
+    <form action="/query/" method="GET">
+        <input type="text" name="text" placeholder="Ask a question or greet (e.g., Hello, 2 + 2)" required>
+        <button type="submit">Submit</button>
+    </form>
+
+    {% if message %}
+    <div class="message success">{{ message }}</div>
+    {% endif %}
+    {% if error %}
+    <div class="message error">{{ error }}</div>
+    {% endif %}
+    {% if answer %}
+    <div class="answer">{{ answer }}</div>
+    {% endif %}
+</div>
+
+</body>
+</html>
